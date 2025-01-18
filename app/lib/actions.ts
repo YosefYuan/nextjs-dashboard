@@ -4,8 +4,6 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import Form from '../ui/invoices/create-form';
-import { error } from 'console';
 
 export type State = {
   errors?: {
@@ -61,7 +59,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
       INSERT INTO invoices (customer_id, amount, status, date)
       VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
     `;
-  } catch (error) {
+  } catch () {
     // If a database error occurs, return a more specific error.
     return {
       message: 'Database Error: Failed to Create Invoice.',
